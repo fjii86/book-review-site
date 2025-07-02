@@ -1,10 +1,23 @@
 {% extends "base.html" %}
-
 {% block content %}
-  <h2>Login</h2>
+<div class="container mt-5" style="max-width: 400px;">
+  <h2 class="text-center mb-4">Login</h2>
+
+  {% if request.GET.next %}
+    <div class="alert alert-warning">
+      You must be logged in to access that page.
+    </div>
+  {% endif %}
+
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Log in</button>
+    <button type="submit" class="btn-submit d-block mx-auto mt-3">Login</button>
   </form>
+
+  <p class="text-center mt-3">
+    Don’t have an account?
+    <a href="{% url 'signup' %}">Sign up here</a>.
+  </p>
+</div>
 {% endblock %}
