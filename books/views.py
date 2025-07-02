@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Book, Review
 from .forms import ReviewForm
@@ -46,3 +47,18 @@ def book_detail(request, pk):
         'reviews': reviews,
         'form': form,
     })
+
+@login_required
+def add_review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            review.save()
+            messages.success(request, 'Your review has been submitted!')
+            return redirect('book_detail', pk=review.book.pk)
+    else:
+        form = ReviewForm()
+
+    return render(request, 'books/add_review.html', {'form': form})
