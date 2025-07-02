@@ -7,7 +7,8 @@ from cloudinary.models import CloudinaryField
 class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
-    cover = CloudinaryField('image', blank=True)
+    cover = CloudinaryField('image')
+    description = models.TextField(default='No description yet')
 
     def __str__(self):
         return self.title

@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 from dotenv import load_dotenv
 load_dotenv()
-
 import os
 from pathlib import Path
 
@@ -60,7 +59,7 @@ ROOT_URLCONF = 'plotpointreviews.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
