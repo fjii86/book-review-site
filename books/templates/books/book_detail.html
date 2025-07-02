@@ -52,7 +52,7 @@
 {% if user.is_authenticated %}
   <hr>
   <h5 class="mb-3">Leave a review</h5>
-  <form method="post">
+  <form method="POST">
     {% csrf_token %}
     <div class="mb-3">
       {{ form.rating.label_tag }}
