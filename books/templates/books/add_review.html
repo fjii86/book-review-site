@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Write a Review</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      {{ form.book.label_tag }}
+      {{ form.book }}
+    </div>
+    <div class="mb-3">
+      {{ form.rating.label_tag }}
+      {{ form.rating }}
+    </div>
+    <div class="mb-3">
+      {{ form.content.label_tag }}
+      {{ form.content }}
+    </div>
+    <button type="submit" class="btn-submit">Submit Review</button>
+  </form>
+</div>
+{% endblock %}
