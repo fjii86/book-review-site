@@ -28,3 +28,17 @@ h1, h2, h3, h4, h5, h6, .card-title {
 .card:hover {
     transform: translateY(-4px);
 }
+
+/* Navigation bar */
+
+.navbar {
+    background-color: #6B1E1E;
+}
+
+.navbar .nav-link, .navbar-brand {
+    color: #F5F1E3 !important;
+}
+
+.navbar .nav-link:hover {
+    color: #C1A25B !important;
+}
