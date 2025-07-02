@@ -8,8 +8,6 @@ from .forms import ReviewForm
 
 def book_list(request):
     books = Book.objects.all()
-    for book in books:
-        book.average_rating = 4.3
     return render(request, 'books/book_list.html', {'books': books})
 
 def signup(request):
