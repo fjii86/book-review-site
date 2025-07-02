@@ -13,7 +13,16 @@
       {% endif %}
     </div>
     <div class="col-md-8">
-      <h2>{{ book.title }}</h2>
+    <h2>{{ book.title }}</h2>
+    {% if book.average_rating %}
+        <p class="mb-2">
+        <i class="fa-regular fa-star"></i>
+        {{ book.average_rating }} / 5
+        <span class="text-muted">({{ book.review_count }} review{{ book.review_count|pluralize }})</span>
+        </p>
+    {% else %}
+        <p class="text-muted">No reviews yet</p>
+    {% endif %}
       <p><strong>Author:</strong> {{ book.author }}</p>
       <p>{{ book.description }}</p>
     </div>
