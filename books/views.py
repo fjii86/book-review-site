@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
 from .models import Book, Review
 from .forms import ReviewForm
 
@@ -33,6 +34,7 @@ def book_detail(request, pk):
                 review.book = book
                 review.user = request.user
                 review.save()
+                messages.success(request, 'Thank you for your review!')
                 return redirect('book_detail', pk=book.pk)
         else:
             form = ReviewForm()

@@ -36,6 +36,16 @@ h1, h2, h3, h4, h5, h6, .card-title {
 
 /* Buttons */
 
+.btn-submit {
+    background-color: #6B1E1E;
+    color: #F5F1E3;
+}
+
+.btn-submit:hover {
+    border-color: #6B1E1E;
+    color: #6B1E1E;
+}
+
 .btn-outline-primary {
     border-color: #6B1E1E;
     color: #6B1E1E;
