@@ -1,0 +1,27 @@
+<!-- templates/books/book_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plot Point Reviews</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: auto; }
+        .book { border-bottom: 1px solid #ccc; padding: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Plot Point Reviews</h1>
+
+    {% for book in books %}
+        <div class="book">
+            <h2>{{ book.title }}</h2>
+            <p><strong>Author:</strong> {{ book.author }}</p>
+            {% if book.cover_url %}
+                <img src="{{ book.cover_url }}" alt="Cover of {{ book.title }}" width="100">
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No books found.</p>
+    {% endfor %}
+</body>
+</html>
