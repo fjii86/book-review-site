@@ -20,8 +20,7 @@ h1, h2, h3, h4, h5, h6, .card-title {
 
 .book-cover {
     height: 250px;  
-    object-fit: cover;         
-    object-position: top;      
+    object-fit: scale-down;      
 }
 
 .card {
@@ -33,6 +32,18 @@ h1, h2, h3, h4, h5, h6, .card-title {
 
 .card:hover {
     transform: translateY(-4px);
+}
+
+/* Buttons */
+
+.btn-outline-primary {
+    border-color: #6B1E1E;
+    color: #6B1E1E;
+}
+
+.btn-outline-primary:hover {
+    background-color: #6B1E1E;
+    color: #F5F1E3;
 }
 
 /* Navigation bar */

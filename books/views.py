@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Book
+from .models import Book, Review
 
 # Create your views here.
 
@@ -19,3 +19,12 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+
+def book_detail(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    reviews = Review.objects.filter(book=book).order_by('-created_at')
+
+    return render(request, 'books/book_detail.html', {
+        'book': book,
+        'reviews': reviews,
+    })
