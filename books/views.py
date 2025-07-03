@@ -18,6 +18,7 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Your account was created. You can now log in!')
             return redirect('login')  # Send the user to login after registration
     else:
         form = UserCreationForm()
