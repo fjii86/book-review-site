@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.db.models import Q
+from django.http import HttpResponseForbidden
 from .models import Book, Review
 from .forms import BookForm
 from .forms import ReviewForm
@@ -96,3 +97,20 @@ def add_book(request):
     else:
         form = BookForm()
     return render(request, 'books/add_book.html', {'form': form})
+
+@login_required
+def edit_review(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    if review.user != request.user:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your review was updated!')
+            return redirect('book_detail', pk=review.book.pk)
+    else:
+        form = ReviewForm(instance=review)
+
+    return render(request, 'books/edit_review.html', {'form': form, 'review': review})
