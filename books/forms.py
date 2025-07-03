@@ -32,9 +32,15 @@ class ReviewForm(forms.ModelForm):
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'author', 'cover']
+        fields = ['title', 'author', 'cover', 'description']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'author': forms.TextInput(attrs={'class': 'form-control'}),
-            'cover': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }
+        labels = {
+            'title': 'Book Title',
+            'author': 'Author',
+            'cover': 'Cover Image',
+            'description': 'Description (optional)',
         }

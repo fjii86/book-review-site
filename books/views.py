@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.db.models import Q
 from .models import Book, Review
+from .forms import BookForm
 from .forms import ReviewForm
 from .forms import ReviewFormWithBook 
 
@@ -74,15 +75,12 @@ def add_book(request):
         if form.is_valid():
             title = form.cleaned_data['title']
             author = form.cleaned_data['author']
-
-            # Check if book already exists
             if Book.objects.filter(title__iexact=title, author__iexact=author).exists():
-                messages.error(request, 'This book already exists.')
+                messages.error(request, 'That book already exists.')
             else:
-                form.save()
+                book = form.save()
                 messages.success(request, 'Book added successfully!')
-                return redirect('book_list')
+                return redirect('book_detail', pk=book.pk)
     else:
         form = BookForm()
-    
     return render(request, 'books/add_book.html', {'form': form})
