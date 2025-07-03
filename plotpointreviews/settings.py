@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from dotenv import load_dotenv
 load_dotenv()
 import os
+import dj_database_url
+import django_heroku
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,13 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--o4gvoolv81^lgu-991a37gb9mn0cq35)-4a+o(gp$4&d_i@fa'
+from decouple import config
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = config('SECRET_KEY')
 
-ALLOWED_HOSTS = ['127.0.0.1',]
+from decouple import config, Csv
+
+DEBUG = config('DEBUG', cast=bool)
+
+ALLOWED_HOSTS = ['plotpoint-reviews-a2e2369bb816.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -130,13 +134,26 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+import os
+from decouple import config
+
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Static files (CSS, JS)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = '/static/'
+
+# Activate Django-Heroku
+django_heroku.settings(locals())
+
+# Database config for Heroku
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
