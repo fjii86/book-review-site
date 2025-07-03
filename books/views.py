@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponseForbidden
 from .models import Book, Review
@@ -12,16 +13,18 @@ from .forms import ReviewFormWithBook
 # Create your views here.
 
 def book_list(request):
-    query = request.GET.get('q', '')
+    query = request.GET.get('q')
     books = Book.objects.all()
-    
     if query:
-        books = books.filter(
-            Q(title__icontains=query) | Q(author__icontains=query)
-        )
+        books = books.filter(title__icontains=query) | books.filter(author__icontains=query)
+
+    paginator = Paginator(books, 9)  # 9 böcker per sida
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     return render(request, 'books/book_list.html', {
-        'books': books,
+        'page_obj': page_obj,
+        'books': page_obj.object_list,
         'query': query,
     })
 
