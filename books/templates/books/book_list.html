@@ -4,6 +4,14 @@
 
 {% block content %}
 <div class="container mt-4">
+    <form method="GET" action="{% url 'book_list' %}" class="mb-4">
+  <div class="input-group">
+    <input type="text" name="q" class="form-control" placeholder="Search by title or author..." value="{{ request.GET.q }}">
+    <button class="btn btn-outline-secondary" type="submit">
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+</form>
     <h2 class="mb-4 text-center">All Books</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
         {% for book in books %}
