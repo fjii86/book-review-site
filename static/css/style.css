@@ -70,6 +70,24 @@ h1, h2, h3, h4, h5, h6, .card-title {
     color: #C1A25B !important;
 }
 
+/* Pagination */
+
+.pagination .page-link {
+    background-color: #F5F1E3;        
+    color: #6B1E1E;                           
+}
+
+.pagination .page-link:hover {
+    background-color: #6B1E1E;        
+    color: #F5F1E3;
+}
+
+.pagination .active .page-link {
+    background-color: #6B1E1E;
+    color: #F5F1E3;     
+    border-color: #444;
+}
+
 /* Footer */
 
 footer {
