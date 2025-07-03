@@ -155,8 +155,19 @@ STATIC_URL = '/static/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Activate Django-Heroku
-django_heroku.settings(locals())
+# Database
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Database config for Heroku
-DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+# Default to SQLite for local development
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+# If DATABASE_URL is defined (e.g. in Heroku), use it instead
+# This allows local development to use SQLite and production to use PostgreSQL
+DATABASE_URL = config('DATABASE_URL', default=None)
+if DATABASE_URL:
+    DATABASES['default'] = dj_database_url.config(default=DATABASE_URL, conn_max_age=600, ssl_require=True)

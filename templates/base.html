@@ -23,15 +23,18 @@
     <div class="w-100 d-flex justify-content-between align-items-center">
       <a class="navbar-brand fs-3 text-uppercase fw-bold" href="/">Plot Point Reviews</a>
 
-      <div class="d-flex align-items-center">
-        {% if user.is_authenticated %}
-          <span class="text-light me-3">Welcome, {{ user.username }}</span>
-          <a class="btn btn-sm btn-outline-light" href="{% url 'logout' %}">Logout</a>
-        {% else %}
-          <a class="btn btn-sm btn-outline-light me-2" href="{% url 'login' %}">Login</a>
-          <a class="btn btn-sm btn-outline-light" href="{% url 'signup' %}">Register</a>
-        {% endif %}
-      </div>
+<div class="d-flex align-items-center">
+  {% if user.is_authenticated %}
+    <span class="text-light me-3">Welcome, {{ user.username }}</span>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-sm btn-outline-light">Logout</button>
+    </form>
+  {% else %}
+    <a class="btn btn-sm btn-outline-light me-2" href="{% url 'login' %}">Login</a>
+    <a class="btn btn-sm btn-outline-light" href="{% url 'signup' %}">Register</a>
+  {% endif %}
+</div>
     </div>
 
     <!-- Hamburger icon -->
@@ -84,7 +87,7 @@
 
     <footer class="mt-4 py-4 text-center text-light">
   <div class="container">
-    <p class="mb-1">&copy; {{ now|date:"Y" }} Plot Point Reviews</p>
+    <p class="mb-1">&copy; Plot Point Reviews</p>
     <p class="small mb-0">Created using Django & Bootstrap</p>
   </div>
 </footer>
