@@ -1,5 +1,5 @@
 from django import forms
-from .models import Review
+from .models import Review, Book
 
 class ReviewFormWithBook(forms.ModelForm):
     class Meta:
@@ -27,4 +27,14 @@ class ReviewForm(forms.ModelForm):
         labels = {
             'rating': 'Rating (1–5)',
             'content': 'Your Review',
+        }
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'author', 'cover']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'author': forms.TextInput(attrs={'class': 'form-control'}),
+            'cover': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }

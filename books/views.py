@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.db.models import Q
 from .models import Book, Review
 from .forms import ReviewForm
 from .forms import ReviewFormWithBook 
@@ -65,3 +66,23 @@ def add_review(request):
         form = ReviewFormWithBook()
 
     return render(request, 'books/add_review.html', {'form': form})
+
+@login_required
+def add_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            author = form.cleaned_data['author']
+
+            # Check if book already exists
+            if Book.objects.filter(title__iexact=title, author__iexact=author).exists():
+                messages.error(request, 'This book already exists.')
+            else:
+                form.save()
+                messages.success(request, 'Book added successfully!')
+                return redirect('book_list')
+    else:
+        form = BookForm()
+    
+    return render(request, 'books/add_book.html', {'form': form})
