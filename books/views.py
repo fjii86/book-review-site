@@ -114,3 +114,17 @@ def edit_review(request, pk):
         form = ReviewForm(instance=review)
 
     return render(request, 'books/edit_review.html', {'form': form, 'review': review})
+
+@login_required
+def delete_review(request, pk):
+    review = get_object_or_404(Review, pk=pk)
+    if review.user != request.user:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        book_pk = review.book.pk
+        review.delete()
+        messages.success(request, 'Your review was deleted.')
+        return redirect('book_detail', pk=book_pk)
+
+    return render(request, 'books/delete_review.html', {'review': review})
