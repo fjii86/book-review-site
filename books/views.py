@@ -11,8 +11,18 @@ from .forms import ReviewFormWithBook
 # Create your views here.
 
 def book_list(request):
+    query = request.GET.get('q', '')
     books = Book.objects.all()
-    return render(request, 'books/book_list.html', {'books': books})
+    
+    if query:
+        books = books.filter(
+            Q(title__icontains=query) | Q(author__icontains=query)
+        )
+
+    return render(request, 'books/book_list.html', {
+        'books': books,
+        'query': query,
+    })
 
 def signup(request):
     if request.method == 'POST':
